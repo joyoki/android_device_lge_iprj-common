@@ -89,7 +89,7 @@ BOARD_NEEDS_MEMORYHEAPPMEM := true
 
 ## This is evil. The mt9m114 (FFC) data inside the liboemcamera blob is in the .bss section,
 ## and inaccessible if PIE is enabled
-TARGET_DISABLE_ARM_PIE := true
+#TARGET_DISABLE_ARM_PIE := true
 
 TARGET_BOOTANIMATION_USE_RGB565 := true
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -101,7 +101,7 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 
 ENABLE_WEBGL := true
 
-TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_QCOM_DISPLAY_VARIANT := legacy
 TARGET_QCOM_AUDIO_VARIANT := caf
 BOARD_HAVE_OLD_ION_API := true
 BOARD_BLUEDROID_VENDOR_CONF := device/lge/iprj-common/vnd_bt.txt
