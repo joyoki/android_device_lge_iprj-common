@@ -23,8 +23,7 @@ $(call inherit-product, build/target/product/full.mk)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.iprj-common.rc:root/init.iprj-common.rc \
-    $(LOCAL_PATH)/ueventd.iprj.rc:root/ueventd.iprj.rc \
-    device/lge/su640/fstab.iprj:root/fstab.iprj 
+    $(LOCAL_PATH)/ueventd.iprj.rc:root/ueventd.iprj.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.iprj.usb.rc:root/init.iprj.usb.rc \
@@ -97,7 +96,8 @@ PRODUCT_PACKAGES += \
     libOmxCore
 
 PRODUCT_PACKAGES += \
-    hwaddrs
+    hwaddrs \
+    firmware_init
 
 # Charger mode
 PRODUCT_PACKAGES += \

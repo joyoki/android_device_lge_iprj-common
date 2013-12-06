@@ -11,6 +11,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_CPU_SMP := true
+TARGET_CPU_VARIANT := cortex-a8
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
@@ -20,7 +21,7 @@ TARGET_USE_SCORPION_PLD_SET := true
 TARGET_SCORPION_BIONIC_PLDOFFS := 6
 TARGET_SCORPION_BIONIC_PLDSIZE := 128
 
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=iprj no_console_suspend=1
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=iprj no_console_suspend=1 androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x40200000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01800000
@@ -35,7 +36,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 2004621312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 BOARD_HAS_NO_SELECT_BUTTON := true
-#BOARD_TOUCH_RECOVERY := true
+BOARD_RECOVERY_SWIPE := true
 BOARD_CUSTOM_GRAPHICS := ../../../device/lge/iprj-common/recovery-gfx.c
 TARGET_USERIMAGES_USE_EXT4 := true
 
@@ -84,12 +85,15 @@ TARGET_PROVIDES_LIBLIGHTS := true
 
 BOARD_HAVE_BACK_MIC_CAMCORDER := true
 
-COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DQCOM_ACDB_ENABLED
+COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DQCOM_ACDB_ENABLED -DNEEDS_VECTORIMPL_SYMBOLS
 BOARD_NEEDS_MEMORYHEAPPMEM := true
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+# Camera wrapper
+COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 
 ## This is evil. The mt9m114 (FFC) data inside the liboemcamera blob is in the .bss section,
 ## and inaccessible if PIE is enabled
-#TARGET_DISABLE_ARM_PIE := true
+TARGET_DISABLE_ARM_PIE := true
 
 TARGET_BOOTANIMATION_USE_RGB565 := true
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -101,7 +105,36 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 
 ENABLE_WEBGL := true
 
-TARGET_QCOM_DISPLAY_VARIANT := legacy
+TARGET_QCOM_DISPLAY_VARIANT := caf
 TARGET_QCOM_AUDIO_VARIANT := caf
-BOARD_HAVE_OLD_ION_API := true
 BOARD_BLUEDROID_VENDOR_CONF := device/lge/iprj-common/vnd_bt.txt
+TARGET_DISPLAY_INSECURE_MM_HEAP := true
+
+BOARD_SEPOLICY_DIRS += \
+        device/lge/iprj-common/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+        genfs_contexts \
+        file_contexts \
+	te_macros \
+	bluetooth.te \
+	device.te \
+	dhcp.te \
+	domain.te \
+	drmserver.te \
+	file.te \
+	kickstart.te \
+	init.te \
+	rild.te \
+    surfaceflinger.te \
+	system.te \
+	ueventd.te \
+	wpa_supplicant.te \
+	app.te \
+	hci_init.te \
+	init_hell.te \
+	keystore.te \
+	mediaserver.te \
+    wpa.te
+
+BOARD_HARDWARE_CLASS := device/lge/iprj-common/cmhw/

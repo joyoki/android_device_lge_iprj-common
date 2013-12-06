@@ -1,9 +1,5 @@
 <resources>
-  <bool name="has_led_flash">true</bool>
-
   <!-- Volume Rocker Wake Support. Some devices do not support (PMU) this.
        Setting to false will disable Volume Rocker Wake support -->
   <bool name="config_show_volumeRockerWake">true</bool>
-  <!--Allow dev to define whether to disable overlays-->
-  <bool name="config_disable_overlays">true</bool>
 </resources>
